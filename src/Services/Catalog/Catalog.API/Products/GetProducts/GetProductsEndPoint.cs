@@ -1,10 +1,9 @@
-﻿
-using Catalog.API.Products.CreateProduct;
-using MediatR;
+﻿using Catalog.API.Products.CreateProduct;
 
 namespace Catalog.API.Products.GetProducts;
 
 public record GetProductResponse(IEnumerable<Product> Products);
+
 public class GetProductsEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
