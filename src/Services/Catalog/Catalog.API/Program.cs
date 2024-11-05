@@ -1,10 +1,16 @@
 var builder = WebApplication.CreateBuilder(args);
-
 builder.AddServiceDefaults();
+builder.Services.AddMarten(opt =>
+{
+    opt.Connection(builder.Configuration.GetConnectionString("Database")!);
+}).UseLightweightSessions();
+builder.Services.AddCarter();
+builder.Services.AddMediatR(config =>
+{
+    config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+});
 var app = builder.Build();
 
-app.MapDefaultEndpoints();
+app.MapCarter();
 
-app.MapGet("/", () => "Hello World!");
-
-app.Run();
+await app.RunAsync();
